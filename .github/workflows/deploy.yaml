@@ -28,11 +28,3 @@ jobs:
         run: |
           echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
           docker push emmylong1/simple-time-api:v1
-
-      - name: Terraform Init
-        run: |
-          terraform init
-
-      - name: Terraform Apply
-        run: |
-          terraform apply -auto-approve

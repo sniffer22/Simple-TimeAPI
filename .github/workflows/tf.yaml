@@ -1,0 +1,36 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.4.0 # Replace with your Terraform version
+
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ./my-tf-script
+
+    - name: Terraform Plan
+      run: terraform plan
+      working-directory: ./my-tf-script
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      working-directory: ./my-tf-script
+      env:
+        TF_VAR_my_variable: ${{ secrets.GCP_PROJECT_ID }}

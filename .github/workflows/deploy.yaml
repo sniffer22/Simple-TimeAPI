@@ -1,4 +1,4 @@
-name: GCP API Deployment Pipeline
+name: Docker Hub API Deployment Pipeline
 
 on:
   push:
@@ -18,10 +18,16 @@ jobs:
         with:
           python-version: '3.x'  # Specify your desired Python version
 
-      - name: Build and push Docker image
+      - name: Build Docker Image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/simple-api:tag .
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/simple-api:tag
+          docker build -t emmylong1/simple-time-api:v1 .
+        env:
+          DOCKER_BUILDKIT: 1  # Enable Docker BuildKit for improved build performance
+
+      - name: Push to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+          docker push emmylong1/simple-time-api:v1
 
       - name: Terraform Init
         run: |

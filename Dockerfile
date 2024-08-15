@@ -11,7 +11,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Copy the FastAPI app code
 COPY main.py .
 
-# Expose the port the app runs on
+## Expose the port the app runs on
 EXPOSE 8000
 
 # Command to run the FastAPI app
